@@ -38,14 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
         videoToggleBtn.addEventListener('click', () => {
             if (heroVideo.paused) {
                 heroVideo.play();
-                videoToggleIcon.setAttribute('data-lucide', 'pause');
+                if (videoToggleIcon) videoToggleIcon.setAttribute('data-lucide', 'pause');
                 videoToggleBtn.setAttribute('aria-label', 'Pause background video');
             } else {
                 heroVideo.pause();
-                videoToggleIcon.setAttribute('data-lucide', 'play');
+                if (videoToggleIcon) videoToggleIcon.setAttribute('data-lucide', 'play');
                 videoToggleBtn.setAttribute('aria-label', 'Play background video');
             }
-            if (window.lucide && typeof lucide.createIcons === 'function') {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
@@ -63,28 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
         voiceoverPlayBtn.addEventListener('click', () => {
             if (welcomeAudio.paused) {
                 welcomeAudio.play();
-                voiceoverIcon.setAttribute('data-lucide', 'pause');
+                if (voiceoverIcon) voiceoverIcon.setAttribute('data-lucide', 'pause');
                 voiceoverPlayBtn.innerHTML = '';
-                voiceoverPlayBtn.appendChild(voiceoverIcon);
+                if (voiceoverIcon) voiceoverPlayBtn.appendChild(voiceoverIcon);
                 voiceoverPlayBtn.append(' Pause welcome audio');
             } else {
                 welcomeAudio.pause();
-                voiceoverIcon.setAttribute('data-lucide', 'play');
+                if (voiceoverIcon) voiceoverIcon.setAttribute('data-lucide', 'play');
                 voiceoverPlayBtn.innerHTML = '';
-                voiceoverPlayBtn.appendChild(voiceoverIcon);
+                if (voiceoverIcon) voiceoverPlayBtn.appendChild(voiceoverIcon);
                 voiceoverPlayBtn.append(' Listen to our welcome');
             }
-            if (window.lucide && typeof lucide.createIcons === 'function') {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
 
         welcomeAudio.addEventListener('ended', () => {
-            voiceoverIcon.setAttribute('data-lucide', 'play');
+            if (voiceoverIcon) voiceoverIcon.setAttribute('data-lucide', 'play');
             voiceoverPlayBtn.innerHTML = '';
-            voiceoverPlayBtn.appendChild(voiceoverIcon);
+            if (voiceoverIcon) voiceoverPlayBtn.appendChild(voiceoverIcon);
             voiceoverPlayBtn.append(' Listen to our welcome');
-            if (window.lucide && typeof lucide.createIcons === 'function') {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
@@ -138,11 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
         animateCanvas();
     }
 
-    // Calculator & Chart.js (Safely skipped offline if Chart is undefined)
+    // Calculator & Chart.js (Safely guarded offline)
     const wasteInput = document.getElementById('waste-input');
     const resAnnual = document.getElementById('res-annual');
-    const resCo2 = document.getElementById('res-co2');
-    const resMeals = document.getElementById('res-meals');
 
     let wasteChartInstance = null;
     const ctxChart = document.getElementById('wasteChart');
@@ -172,18 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     scales: { y: { beginAtZero: true } }
                 }
             });
-        } catch (e) {
-            console.warn('Chart initialization skipped:', e);
+        } catch (err) {
+            console.warn('Chart initialization skipped offline:', err);
         }
     }
 
     function updateCalculator(val) {
         const annual = (val * 52).toFixed(1);
-        const co2 = (annual * 2.5).toFixed(1);
-        const meals = Math.round(annual * 3);
         if (resAnnual) resAnnual.textContent = `${annual} kg`;
-        if (resCo2) resCo2.textContent = `${co2} kg`;
-        if (resMeals) resMeals.textContent = `${meals} meals`;
     }
 
     if (wasteInput) {
@@ -222,32 +216,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const selected = document.querySelectorAll('.ingredient-card.selected');
             const names = Array.from(selected).map(c => c.dataset.ingredient);
             
-            recipeOutput.style.display = 'block';
+            if (recipeOutput) recipeOutput.style.display = 'block';
 
             if (names.length === 0) {
-                recipeTitle.textContent = "Select Food Items";
-                recipeDesc.textContent = "Please pick at least one ingredient from your fridge to generate a recipe idea!";
+                if (recipeTitle) recipeTitle.textContent = "Select Food Items";
+                if (recipeDesc) recipeDesc.textContent = "Please pick at least one ingredient from your fridge to generate a recipe idea!";
             } else if (names.includes('rice') && names.includes('eggs') && names.length === 2) {
-                recipeTitle.textContent = "Singaporean Golden Fried Rice";
-                recipeDesc.textContent = "Sauté leftover rice with minced garlic, scramble 2 eggs directly into the wok, and season with light soy sauce and sesame oil.";
+                if (recipeTitle) recipeTitle.textContent = "Singaporean Golden Fried Rice";
+                if (recipeDesc) recipeDesc.textContent = "Sauté leftover rice with minced garlic, scramble 2 eggs directly into the wok, and season with light soy sauce and sesame oil.";
             } else if (names.length === 1 && names[0] === 'rice') {
-                recipeTitle.textContent = "Crispy Garlic Rice Porridge (Congee)";
-                recipeDesc.textContent = "Simmer cooked leftover rice in vegetable or chicken broth with sliced ginger for 15 minutes. Top with crispy fried garlic and spring onions.";
+                if (recipeTitle) recipeTitle.textContent = "Crispy Garlic Rice Porridge (Congee)";
+                if (recipeDesc) recipeDesc.textContent = "Simmer cooked leftover rice in vegetable or chicken broth with sliced ginger for 15 minutes. Top with crispy fried garlic and spring onions.";
             } else if (names.length === 1 && names[0] === 'bread') {
-                recipeTitle.textContent = "Crispy Garlic Bread Croutons";
-                recipeDesc.textContent = "Dice stale bread into cubes, toss with olive oil, minced garlic, and dried herbs. Bake at 180°C for 10 minutes until golden and crunchy.";
+                if (recipeTitle) recipeTitle.textContent = "Crispy Garlic Bread Croutons";
+                if (recipeDesc) recipeDesc.textContent = "Dice stale bread into cubes, toss with olive oil, minced garlic, and dried herbs. Bake at 180°C for 10 minutes until golden and crunchy.";
             } else if (names.length === 1 && names[0] === 'veggies') {
-                recipeTitle.textContent = "Savory Veggie Broth & Stew Base";
-                recipeDesc.textContent = "Simmer limp vegetables with pepper, garlic, and herbs for 20 minutes to create a rich broth, or stir-fry briskly with oyster sauce.";
+                if (recipeTitle) recipeTitle.textContent = "Savory Veggie Broth & Stew Base";
+                if (recipeDesc) recipeDesc.textContent = "Simmer limp vegetables with pepper, garlic, and herbs for 20 minutes to create a rich broth, or stir-fry briskly with oyster sauce.";
             } else if (names.length === 1 && names[0] === 'eggs') {
-                recipeTitle.textContent = "Classic Fluffy Omelette with Herbs";
-                recipeDesc.textContent = "Whisk eggs with pepper and soy sauce. Cook over low heat in butter or oil, folding with fresh herbs or cheese for a quick meal.";
+                if (recipeTitle) recipeTitle.textContent = "Classic Fluffy Omelette with Herbs";
+                if (recipeDesc) recipeDesc.textContent = "Whisk eggs with pepper and soy sauce. Cook over low heat in butter or oil, folding with fresh herbs or cheese for a quick meal.";
             } else if (names.length === 1 && names[0] === 'chicken') {
-                recipeTitle.textContent = "Shredded Chicken Salad with Sesame Dressing";
-                recipeDesc.textContent = "Shred leftover cooked chicken and toss with toasted sesame oil, soy sauce, cucumbers, and cilantro for a refreshing protein salad.";
+                if (recipeTitle) recipeTitle.textContent = "Shredded Chicken Salad with Sesame Dressing";
+                if (recipeDesc) recipeDesc.textContent = "Shred leftover cooked chicken and toss with toasted sesame oil, soy sauce, cucumbers, and cilantro for a refreshing protein salad.";
             } else {
-                recipeTitle.textContent = "Zero-Waste Leftover Fusion Stir-Fry";
-                recipeDesc.textContent = "Chop up your selected leftovers, sauté on high heat with ginger, garlic, and soy sauce. Serve hot over noodles, bread, or rice!";
+                if (recipeTitle) recipeTitle.textContent = "Zero-Waste Leftover Fusion Stir-Fry";
+                if (recipeDesc) recipeDesc.textContent = "Chop up your selected leftovers, sauté on high heat with ginger, garlic, and soy sauce. Serve hot over noodles, bread, or rice!";
             }
         });
     }
@@ -273,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qFeedback = document.getElementById('quiz-feedback');
 
     function loadQuizQuestion() {
-        if (!qTitle) return;
+        if (!qTitle || !qOptions) return;
         const q = quizQuestions[currentQuestion];
         qTitle.textContent = q.question;
         qOptions.innerHTML = '';
@@ -327,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = document.getElementById('modal-overlay');
     const modalCloseBtn = document.getElementById('modal-close-btn');
 
-    let totalPledges = parseInt(localStorage.getItem('leftoverHeroesPledges') || '0');
+    let totalPledges = parseInt(localStorage.getItem('leftover_heroes_pledges') || '0', 10);
 
     function updatePledgeDisplay() {
         if (heroPledgeCount) heroPledgeCount.textContent = totalPledges;
@@ -343,23 +337,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pledgeForm) {
         pledgeForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = pledgeNameInput ? pledgeNameInput.value.trim() : '';
-            if (!name) return;
-
-            playChimeSfx();
+            playClickSfx();
             totalPledges++;
-            localStorage.setItem('leftoverHeroesPledges', totalPledges);
+            localStorage.setItem('leftover_heroes_pledges', totalPledges);
             updatePledgeDisplay();
-
             if (pledgeNameInput) pledgeNameInput.value = '';
             if (modalOverlay) modalOverlay.classList.add('active');
-
+            playChimeSfx();
             if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
             }
         });
     }
