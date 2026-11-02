@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leftover Recipes | Leftover Heroes</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Recipes Stylesheet -->
+    <link rel="stylesheet" href="recipes.css">
+</head>
+<body>
+
+    <!-- Sticky Header with Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i data-lucide="leaf"></i> Leftover<span>Heroes</span>
+            </a>
+            <div class="nav-right">
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tracker.html">Tracker</a></li>
+                        <li><a href="recipes.html" class="active">Recipes</a></li>
+                        <li><a href="play.html">Play</a></li>
+                        <li><a href="today.html">Today</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i data-lucide="moon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle Mobile Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero" style="padding: 5rem 2rem 6rem;">
+        <div class="hero-content">
+            <div class="sdg-badge">
+                <i data-lucide="utensils" style="width:16px;height:16px;"></i> Kitchen Rescue
+            </div>
+            <h1>Leftover Recipes</h1>
+            <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">Discover creative culinary ideas to transform leftover ingredients into delicious meals.</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="recipes-dashboard">
+            
+            <!-- Search & Filter Controls -->
+            <div class="recipes-controls">
+                <div class="search-bar-wrapper">
+                    <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+                    <input type="text" id="recipe-search" placeholder="Search by name or ingredient (e.g., rice, eggs)..." autocomplete="off">
+                </div>
+
+                <div class="filter-toolbar">
+                    <div class="ingredient-chips" id="ingredient-chips">
+                        <button class="chip active" data-ingredient="All">All</button>
+                        <button class="chip" data-ingredient="Rice">Rice</button>
+                        <button class="chip" data-ingredient="Bread">Bread</button>
+                        <button class="chip" data-ingredient="Eggs">Eggs</button>
+                        <button class="chip" data-ingredient="Vegetables">Vegetables</button>
+                        <button class="chip" data-ingredient="Chicken">Chicken</button>
+                        <button class="chip" data-ingredient="Fruit">Fruit</button>
+                    </div>
+
+                    <button class="favorites-toggle-btn" id="favorites-toggle-btn" aria-label="Toggle Favorites Only">
+                        <i data-lucide="heart" style="width: 16px; height: 16px;"></i> Favorites Only
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Count Status Line -->
+            <div class="match-status" id="match-status">
+                Showing 12 recipes
+            </div>
+
+            <!-- Recipe Cards Grid -->
+            <div class="recipes-grid" id="recipes-grid">
+                <!-- Cards injected dynamically via recipes.js -->
+            </div>
+
+            <!-- No Matches State -->
+            <div class="no-matches-state" id="no-matches-state" style="display: none;">
+                <i data-lucide="search-x" style="width: 48px; height: 48px; opacity: 0.4; margin-bottom: 0.75rem;"></i>
+                <p>No recipes found matching your search or filters.</p>
+                <button class="btn-clear-filters" id="btn-clear-filters">Clear filters</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Recipe Details Modal -->
+    <div class="modal-overlay" id="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+                <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+            </button>
+            <div class="modal-header">
+                <span id="modal-emoji" style="font-size: 2.5rem;">🍚</span>
+                <div>
+                    <h3 id="modal-title">Recipe Title</h3>
+                    <div class="modal-meta">
+                        <span id="modal-leftovers">Leftovers: Rice</span> &bull; 
+                        <span id="modal-difficulty" class="difficulty-badge">Easy</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h4>Steps:</h4>
+                <p id="modal-steps">Recipe instructions go here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Leftover Heroes. Supporting UN SDG 12: Responsible Consumption and Production in Singapore.</p>
+    </footer>
+
+    <!-- Shared Script -->
+    <script src="script.js"></script>
+    <!-- Page Specific Recipes Script -->
+    <script src="recipes.js"></script>
+</body>
+</html>

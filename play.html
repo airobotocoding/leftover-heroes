@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fridge Sort Game | Leftover Heroes</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Play Game Stylesheet -->
+    <link rel="stylesheet" href="play.css">
+</head>
+<body>
+
+    <!-- Sticky Header with Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i data-lucide="leaf"></i> Leftover<span>Heroes</span>
+            </a>
+            <div class="nav-right">
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tracker.html">Tracker</a></li>
+                        <li><a href="recipes.html">Recipes</a></li>
+                        <li><a href="play.html" class="active">Play</a></li>
+                        <li><a href="today.html">Today</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i data-lucide="moon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle Mobile Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero" style="padding: 5rem 2rem 6rem;">
+        <div class="hero-content">
+            <div class="sdg-badge">
+                <i data-lucide="gamepad-2" style="width:16px;height:16px;"></i> Fridge Sort Challenge
+            </div>
+            <h1>Fridge Sort Game</h1>
+            <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">Drag or sort items into the correct bin before they go to waste!</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="game-dashboard" id="game-dashboard">
+            
+            <!-- Game HUD (Score, Round, Best Score) -->
+            <div class="game-hud">
+                <div class="hud-item">
+                    <span>Score:</span> <strong id="score-display">0</strong>
+                </div>
+                <div class="hud-item">
+                    <span>Round:</span> <strong id="round-display">1 / 10</strong>
+                </div>
+                <div class="hud-item">
+                    <span>Best:</span> <strong id="best-score-display">0</strong>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="game-progress-track">
+                <div class="game-progress-fill" id="progress-fill" style="width: 10%;"></div>
+            </div>
+
+            <!-- Active Game Arena -->
+            <div class="game-arena" id="game-arena">
+                
+                <!-- Active Card Container -->
+                <div class="card-drop-zone">
+                    <div class="food-game-card" id="food-card" draggable="true" tabindex="0" aria-label="Food item to sort">
+                        <span id="card-emoji" class="food-emoji">🍚</span>
+                        <h3 id="card-name">Leftover Rice</h3>
+                        <p class="card-hint">Drag into a bin or press keys [1], [2], [3]</p>
+                    </div>
+                </div>
+
+                <!-- Feedback Banner -->
+                <div class="feedback-banner" id="feedback-banner">
+                    <p id="feedback-text">Sort the item into the correct category!</p>
+                </div>
+
+                <!-- Bins Grid -->
+                <div class="bins-grid">
+                    <div class="bin-card" data-bin="eat-soon" role="button" tabindex="0" aria-label="Eat soon bin. Key 1">
+                        <div class="bin-icon">🔥</div>
+                        <h3>1. Eat Soon</h3>
+                        <p>Great for quick meals within 24-48 hours</p>
+                        <span class="key-badge">Key 1</span>
+                    </div>
+
+                    <div class="bin-card" data-bin="freeze-it" role="button" tabindex="0" aria-label="Freeze it bin. Key 2">
+                        <div class="bin-icon">❄️</div>
+                        <h3>2. Freeze It</h3>
+                        <p>Preserve for later use safely</p>
+                        <span class="key-badge">Key 2</span>
+                    </div>
+
+                    <div class="bin-card" data-bin="compost" role="button" tabindex="0" aria-label="Compost bin. Key 3">
+                        <div class="bin-icon">🌱</div>
+                        <h3>3. Compost</h3>
+                        <p>Organic scraps and inedible parts</p>
+                        <span class="key-badge">Key 3</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Game Over / Results Screen -->
+            <div class="game-over-screen" id="game-over-screen" style="display: none;">
+                <div class="trophy-icon" id="trophy-icon">🏆</div>
+                <h2 id="game-over-title">Round Complete!</h2>
+                <p id="game-over-summary">You scored 8 out of 10 correctly.</p>
+                <div class="final-score-box">
+                    <span>Final Score</span>
+                    <strong id="final-score-value">80</strong>
+                </div>
+                <button class="btn-primary" id="btn-restart" style="margin-top: 1.5rem; width: 100%; max-width: 250px;">
+                    Play Again
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Leftover Heroes. Supporting UN SDG 12: Responsible Consumption and Production in Singapore.</p>
+    </footer>
+
+    <!-- Shared Script -->
+    <script src="script.js"></script>
+    <!-- Game Script -->
+    <script src="play.js"></script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+/* Game Dashboard Styles - Optimized to fit laptop screen without scrolling */
+.game-dashboard {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+    .game-dashboard {
+        padding: 1.25rem 1rem;
+    }
+}
+
+.game-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.hud-item strong {
+    color: var(--forest-green);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem;
+    margin-left: 0.35rem;
+}
+
+body.dark-mode .hud-item strong {
+    color: var(--fresh-green);
+}
+
+.game-progress-track {
+    background: rgba(20, 83, 45, 0.08);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+body.dark-mode .game-progress-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.game-progress-fill {
+    height: 100%;
+    width: 10%;
+    background-color: var(--fresh-green);
+    border-radius: 4px;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.game-arena {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-drop-zone {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+}
+
+.food-game-card {
+    background: rgba(20, 83, 45, 0.04);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    text-align: center;
+    width: 100%;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    user-select: none;
+    outline: none;
+}
+
+body.dark-mode .food-game-card {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.food-game-card:hover, .food-game-card:focus {
+    border-color: var(--fresh-green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 83, 45, 0.1);
+}
+
+.food-game-card:active {
+    cursor: grabbing;
+}
+
+.food-emoji {
+    font-size: 2.75rem;
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.food-game-card h3 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+}
+
+.card-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.feedback-banner {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background: rgba(20, 83, 45, 0.03);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    width: 100%;
+    max-width: 480px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    transition: all 0.3s;
+}
+
+body.dark-mode .feedback-banner {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.feedback-banner.correct {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: var(--fresh-green);
+    color: var(--forest-green);
+}
+
+body.dark-mode .feedback-banner.correct {
+    color: var(--fresh-green);
+}
+
+.feedback-banner.incorrect {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+    color: #dc2626;
+}
+
+.bins-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .bins-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bin-card {
+    background: rgba(20, 83, 45, 0.03);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1.15rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    outline: none;
+    position: relative;
+}
+
+body.dark-mode .bin-card {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.bin-card:hover, .bin-card:focus, .bin-card.drag-over {
+    border-color: var(--fresh-green);
+    background: rgba(34, 197, 94, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.12);
+}
+
+.bin-icon {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+}
+
+.bin-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.2rem;
+}
+
+.bin-card p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+}
+
+.key-badge {
+    font-size: 0.7rem;
+    background: rgba(20, 83, 45, 0.08);
+    color: var(--text-muted);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+
+body.dark-mode .key-badge {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Game Over Screen */
+.game-over-screen {
+    text-align: center;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trophy-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.75rem;
+    animation: bounceTrophy 1s infinite alternate;
+}
+
+@keyframes bounceTrophy {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+.game-over-screen h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--forest-green);
+    margin-bottom: 0.35rem;
+}
+
+body.dark-mode .game-over-screen h2 {
+    color: var(--fresh-green);
+}
+
+.game-over-screen p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.final-score-box {
+    background: rgba(20, 83, 45, 0.04);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem 2.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+}
+
+body.dark-mode .final-score-box {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.final-score-box span {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.final-score-box strong {
+    font-size: 2.5rem;
+    color: var(--fresh-green);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}

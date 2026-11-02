@@ -1,0 +1,355 @@
+/* Media Stylesheet for Leftover Heroes AI Assets */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Hero Video */
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Dark Overlay for Text Contrast */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 1;
+}
+
+/* Position Content & Canvas Above Video */
+#hero-canvas,
+.floating-emoji {
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+}
+
+/* Hero Pause / Play Video Toggle Button */
+.hero-video-toggle {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 4;
+    background: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hero-video-toggle:hover {
+    background: rgba(15, 23, 42, 0.9);
+    transform: scale(1.05);
+}
+
+.hero-video-toggle:focus-visible {
+    outline: 2px solid var(--fresh-green, #22c55e);
+    outline-offset: 2px;
+}
+
+.hero-video-toggle i {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+}
+
+/* Voice-over Widget Styles */
+.voiceover-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.voiceover-btn {
+    background: var(--fresh-green, #22c55e);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.2);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.voiceover-btn:hover {
+    background: #16a34a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(34, 197, 94, 0.3);
+}
+
+.voiceover-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.transcript-wrapper {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.transcript-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-muted, #64748b);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.transcript-toggle:hover {
+    color: var(--fresh-green, #22c55e);
+}
+
+.transcript-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out, background-color 0.3s ease;
+    background: var(--card-bg, #f8fafc);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 0 1.5rem;
+    text-align: left;
+    color: var(--text-main, #334155);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.transcript-panel.open {
+    max-height: 300px;
+    padding: 1.25rem 1.5rem;
+    border-color: var(--border-color, #e2e8f0);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* AI Illustrations Styles & Layouts */
+.content-illustration {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    object-fit: cover;
+    display: block;
+}
+
+/* Why It Matters: Compost Illustration beside cards grid */
+.about-content-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.about-illustration-container {
+    width: 100%;
+}
+
+/* Leftover Idea Generator: Market Illustration above ingredient buttons */
+.generator-illustration-container {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 968px) {
+    .about-content-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Suno Theme Song Card Styles */
+.theme-song-card {
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.theme-song-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-main, #0f172a);
+    margin-bottom: 0.5rem;
+}
+
+.theme-song-card p {
+    color: var(--text-muted, #64748b);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.suno-player-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.suno-player-wrapper iframe {
+    max-width: 100%;
+    width: 760px;
+    height: 240px;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Asset Credits Card Styles */
+.asset-credits-card {
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.asset-credits-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-main, #0f172a);
+    margin-bottom: 1rem;
+}
+
+.credits-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-main, #334155);
+}
+
+.credits-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.credits-list a {
+    color: var(--fresh-green, #22c55e);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.credits-list a:hover {
+    color: #16a34a;
+}
+
+.credits-note {
+    font-size: 0.95rem;
+    color: var(--text-muted, #64748b);
+    font-style: italic;
+    margin-top: 1rem;
+    line-height: 1.5;
+}
+
+/* Dark Mode Support for Cards & Panels */
+[data-theme="dark"] .theme-song-card,
+body.dark .theme-song-card,
+body.dark-mode .theme-song-card,
+[data-theme="dark"] .asset-credits-card,
+body.dark .asset-credits-card,
+body.dark-mode .asset-credits-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .theme-song-card h3,
+body.dark .theme-song-card h3,
+body.dark-mode .theme-song-card h3,
+[data-theme="dark"] .asset-credits-card h3,
+body.dark .asset-credits-card h3,
+body.dark-mode .asset-credits-card h3 {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .theme-song-card p,
+body.dark .theme-song-card p,
+body.dark-mode .theme-song-card p {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .credits-list,
+body.dark .credits-list,
+body.dark-mode .credits-list {
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .credits-note,
+body.dark .credits-note,
+body.dark-mode .credits-note {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .transcript-panel,
+body.dark .transcript-panel,
+body.dark-mode .transcript-panel {
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .transcript-toggle,
+body.dark .transcript-toggle,
+body.dark-mode .transcript-toggle {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .transcript-toggle:hover,
+body.dark .transcript-toggle:hover,
+body.dark-mode .transcript-toggle:hover {
+    color: #22c55e;
+}
+
+/* Accessibility: Turn off background video playback for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-video {
+        display: none;
+    }
+    
+    .hero {
+        background-image: url('assets/images/hero-banner.webp');
+        background-size: cover;
+        background-position: center;
+    }
+}

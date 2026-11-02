@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today in Singapore | Leftover Heroes</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Page Specific Stylesheets -->
+    <link rel="stylesheet" href="today.css">
+    <link rel="stylesheet" href="finder.css">
+</head>
+<body>
+
+    <!-- Sticky Header with Navigation -->
+    <header id="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i data-lucide="leaf"></i> Leftover<span>Heroes</span>
+            </a>
+            <div class="nav-right">
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tracker.html">Tracker</a></li>
+                        <li><a href="recipes.html">Recipes</a></li>
+                        <li><a href="play.html">Play</a></li>
+                        <li><a href="today.html" class="active">Today</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i data-lucide="moon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle Mobile Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero" style="padding: 5rem 2rem 6rem;">
+        <div class="hero-content">
+            <div class="sdg-badge">
+                <i data-lucide="cloud-sun" style="width:16px;height:16px;"></i> Live Weather Data
+            </div>
+            <h1>Today in Singapore</h1>
+            <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">Check real-time 2-hour weather forecasts across different Singapore regions powered by NEA.</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="weather-wrapper">
+            
+            <!-- Weather Selection Card -->
+            <div class="card weather-control-card">
+                <h3>Select Your Area</h3>
+                <div class="form-group">
+                    <label for="area-select">Singapore Region / Area</label>
+                    <select id="area-select">
+                        <option value="Ang Mo Kio">Ang Mo Kio</option>
+                    </select>
+                </div>
+                <button id="fetch-forecast-btn" class="btn-action">Show forecast</button>
+            </div>
+
+            <!-- Weather Result Card Section -->
+            <div class="weather-display-section">
+                <div id="weather-card" class="card weather-card hidden">
+                    <div class="weather-header">
+                        <span id="forecast-area-name" class="area-tag">Area</span>
+                        <span id="forecast-time-period" class="time-tag">Time Period</span>
+                    </div>
+                    <div class="weather-body">
+                        <div id="weather-icon-container" class="weather-icon-box">
+                            <!-- Dynamic Weather Icon -->
+                        </div>
+                        <h2 id="forecast-condition" class="forecast-condition-text">Loading...</h2>
+                    </div>
+                    <div class="weather-footer">
+                        <p class="source-credit">Source: data.gov.sg (NEA)</p>
+                    </div>
+                </div>
+
+                <!-- Loading State Container -->
+                <div id="weather-loading" class="card weather-state-card hidden" aria-live="polite">
+                    <div class="spinner"></div>
+                    <p>Loading forecast...</p>
+                </div>
+
+                <!-- Error / Fallback State Container -->
+                <div id="weather-error" class="card weather-state-card hidden" aria-live="polite">
+                    <i data-lucide="alert-circle" style="width: 36px; height: 36px; color: var(--accent-color, #e63946); margin-bottom: 0.5rem;"></i>
+                    <p id="error-message-text">Unable to load the latest forecast. Please check your connection.</p>
+                    <button id="retry-btn" class="btn-action btn-secondary" style="margin-top: 1rem;">Try again</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Leftover Helper Section -->
+        <div class="leftover-helper-section">
+            <div class="card leftover-helper-card">
+                <h3>Leftover Helper</h3>
+                <p class="helper-subtitle">Got some extra ingredients? Type in a food item and get a quick idea.</p>
+                
+                <div class="form-group">
+                    <label for="leftover-input">Leftover food item</label>
+                    <input type="text" id="leftover-input" placeholder="e.g., cold rice" maxlength="30" autocomplete="off">
+                    <span class="error-message" id="leftover-error" aria-live="polite"></span>
+                </div>
+
+                <button id="get-ai-idea-btn" class="btn-action">Get an idea</button>
+                <p class="privacy-note">Do not type names or personal details. Your words are sent to Pollinations.ai.</p>
+
+                <!-- AI Result Speech Bubble Card -->
+                <div id="ai-result-box" class="ai-result-box hidden" aria-live="polite">
+                    <span id="ai-result-label" class="ai-badge">AI idea – check before you try it</span>
+                    <div class="speech-bubble">
+                        <p id="ai-idea-text">Your idea will appear here...</p>
+                    </div>
+                    <!-- Weather Context Sub-line -->
+                    <div id="ai-weather-context" class="ai-weather-context">
+                        <!-- e.g., Idea for: Thundery Showers in Ang Mo Kio -->
+                    </div>
+
+                    <!-- Show a picture button and picture display container -->
+                    <div class="ai-picture-action-area">
+                        <button id="show-picture-btn" class="btn-action btn-secondary hidden" style="margin-top: 1rem;">Show a picture</button>
+                        
+                        <div id="ai-picture-container" class="ai-picture-container hidden">
+                            <span id="ai-picture-label" class="ai-badge picture-badge">AI picture – may not look like the real dish</span>
+                            <div id="ai-picture-wrapper" class="picture-wrapper">
+                                <!-- Dynamic image or loading/error state -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Finder Section -->
+        <div class="recipe-finder-section">
+            <div class="card recipe-finder-card">
+                <h3>Recipe Finder</h3>
+                <p class="finder-subtitle">Search for meals based on main ingredients using TheMealDB.</p>
+                
+                <div class="finder-form-group">
+                    <label for="finder-ingredient-input">Main Ingredient</label>
+                    <div class="finder-input-row">
+                        <input type="text" id="finder-ingredient-input" placeholder="e.g., rice, chicken, egg" autocomplete="off">
+                        <button id="find-recipes-btn" class="btn-action">Find recipes</button>
+                    </div>
+                    <span class="finder-error-message" id="finder-error" aria-live="polite"></span>
+                </div>
+
+                <div class="finder-chips-row" id="finder-chips-row">
+                    <button class="finder-chip active" data-ingredient="Rice">Rice</button>
+                    <button class="finder-chip" data-ingredient="Chicken">Chicken</button>
+                    <button class="finder-chip" data-ingredient="Egg">Egg</button>
+                    <button class="finder-chip" data-ingredient="Bread">Bread</button>
+                    <button class="finder-chip" data-ingredient="Potato">Potato</button>
+                </div>
+
+                <!-- Results Container -->
+                <div id="finder-results-container" class="recipes-result-grid" aria-live="polite">
+                    <!-- Dynamic recipe cards or skeletons injected here -->
+                </div>
+
+                <p id="finder-source-credit" class="finder-source-credit">Recipes and photos from TheMealDB.com</p>
+            </div>
+        </div>
+
+        <!-- Data and AI Credits Card -->
+        <div class="credits-section">
+            <div class="card credits-card">
+                <h3>Data and AI credits</h3>
+                <ul class="credits-list">
+                    <li>Contains information from the 2-hour weather forecast accessed on <span id="forecast-date-span">today</span> from <a href="https://data.gov.sg/open-data-licence" target="_blank" rel="noopener noreferrer">data.gov.sg</a>, which is made available under the terms of the Singapore Open Data Licence version 1.0</li>
+                    <li><a href="https://www.themealdb.com" target="_blank" rel="noopener noreferrer">Recipes and photos from TheMealDB.com</a></li>
+                    <li>Ideas and pictures are made by AI using Pollinations.ai. AI can be wrong – check before you use them.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Leftover Heroes. Supporting UN SDG 12: Responsible Consumption and Production in Singapore.</p>
+    </footer>
+
+    <!-- Shared Script -->
+    <script src="script.js"></script>
+    <!-- Page Specific Weather & AI Scripts -->
+    <script src="today.js"></script>
+    <!-- Page Specific Recipe Finder Script -->
+    <script src="finder.js"></script>
+</body>
+</html>
