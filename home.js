@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoToggleIcon.setAttribute('data-lucide', 'play');
                 videoToggleBtn.setAttribute('aria-label', 'Play background video');
             }
-            if (window.lucide) {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 voiceoverPlayBtn.appendChild(voiceoverIcon);
                 voiceoverPlayBtn.append(' Listen to our welcome');
             }
-            if (window.lucide) {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceoverPlayBtn.innerHTML = '';
             voiceoverPlayBtn.appendChild(voiceoverIcon);
             voiceoverPlayBtn.append(' Listen to our welcome');
-            if (window.lucide) {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
         });
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animateCanvas();
     }
 
-    // Calculator & Chart.js (Safely guarded against offline CDN failures)
+    // Calculator & Chart.js (Safely skipped offline if Chart is undefined)
     const wasteInput = document.getElementById('waste-input');
     const resAnnual = document.getElementById('res-annual');
     const resCo2 = document.getElementById('res-co2');
@@ -146,28 +146,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let wasteChartInstance = null;
     const ctxChart = document.getElementById('wasteChart');
-    if (ctxChart) {
-        if (typeof Chart !== 'undefined') {
+    if (ctxChart && typeof Chart !== 'undefined') {
+        try {
             wasteChartInstance = new Chart(ctxChart.getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Household', 'Food Services', 'Retail', 'Manufacturing'],
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
                     datasets: [{
-                        label: 'Singapore Food Waste Distribution (%)',
-                        data: [38, 34, 15, 13],
-                        backgroundColor: ['#22C55E', '#F97316', '#3b82f6', '#14532D'],
+                        label: "Food Waste Generated ('000 tonnes)",
+                        data: [817, 813, 755, 784, 790],
+                        backgroundColor: ['#22C55E', '#F97316', '#3b82f6', '#14532D', '#10B981'],
                         borderRadius: 8
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { 
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Singapore Food Waste Generated (Source: NEA)'
+                        }
+                    },
                     scales: { y: { beginAtZero: true } }
                 }
             });
-        } else {
-            console.warn('Chart.js is not loaded. Skipping chart initialization.');
+        } catch (e) {
+            console.warn('Chart initialization skipped:', e);
         }
     }
 
@@ -246,19 +252,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Quiz Logic
+    // Quiz Logic (Updated with NEA facts)
     const quizQuestions = [
         {
-            question: "Which sector in Singapore generates the largest share of food waste?",
-            options: ["Domestic / Households", "Food & Beverage Outlets", "Supermarkets / Retail", "Food Manufacturing"],
-            answer: 0,
-            feedback: "Correct! Households account for the largest single share of Singapore's food waste."
+            question: "How many thousand tonnes of food waste were generated in Singapore in 2025 according to NEA?",
+            options: ["755", "784", "790", "817"],
+            answer: 2,
+            feedback: "Correct! In 2025, food waste generated in Singapore was 790 thousand tonnes."
         },
         {
-            question: "What is the primary disposal method for unrecyclable food waste in Singapore?",
-            options: ["Landfill burial", "Waste-to-energy incineration", "Ocean dumping", "Composting"],
-            answer: 1,
-            feedback: "Correct! Most unrecyclable waste goes to waste-to-energy incineration plants."
+            question: "What was the food waste recycling rate in Singapore in 2025?",
+            options: ["11%", "15%", "18%", "38%"],
+            answer: 2,
+            feedback: "Correct! In 2025, the food waste recycling rate was 18% (140,000 tonnes recycled out of 790,000 tonnes)."
         }
     ];
     let currentQuestion = 0;
